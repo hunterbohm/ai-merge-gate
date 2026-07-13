@@ -1,0 +1,20 @@
+{
+  "name": "ai-merge-gate",
+  "version": "0.1.0",
+  "description": "The gate between \"the agent said it's done\" and \"this is live.\" Blocks AI-written code from merging until it's green and clean.",
+  "type": "module",
+  "bin": {
+    "ai-merge-gate": "./gate.sh"
+  },
+  "scripts": {
+    "gate": "./gate.sh",
+    "demo": "bash ./example/run-demo.sh"
+  },
+  "keywords": ["ai", "claude-code", "codex", "ci", "code-review", "agents", "merge-gate", "vibe-coding"],
+  "license": "MIT",
+  "author": "Hunter Bohm (https://hunterbohm.me)",
+  "homepage": "https://hunterbohm.me",
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "//": "Drop this into your project's .claude/settings.json (or merge the hooks block). The Stop hook blocks Claude Code from ending a turn while ai-merge-gate is red.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./.claude/hooks/gate-stop.sh", "timeout": 120 }
+        ]
+      }
+    ]
+  }
+}

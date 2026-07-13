@@ -1,0 +1,38 @@
+name: ai-merge-gate
+# The same gate you run locally, enforced on every PR. Red here = no merge.
+# Screenshots from the headless render step upload as a build artifact so the
+# proof-it-renders evidence is attached to the run.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          # cache: npm   # uncomment once you have a lockfile
+
+      # Install YOUR app's deps here (edit to match your project / package manager):
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      # Playwright is only needed if you set RENDER_URL in gate.config.sh.
+      - name: Install Playwright browser (only if you use render evidence)
+        run: npx playwright install --with-deps chromium || true
+
+      - name: Run ai-merge-gate
+        run: bash ./gate.sh
+
+      - name: Upload render evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merge-evidence
+          path: evidence/
+          if-no-files-found: ignore
